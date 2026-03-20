@@ -7,8 +7,8 @@ namespace MarcoRieser\TailwindMergeLaravel;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\ComponentAttributeBag;
-use TalesFromADev\TailwindMerge\TailwindMergeInterface;
 use TalesFromADev\TailwindMerge\TailwindMerge;
+use TalesFromADev\TailwindMerge\TailwindMergeInterface;
 
 class TailwindMergeServiceProvider extends BaseServiceProvider
 {
@@ -27,7 +27,7 @@ class TailwindMergeServiceProvider extends BaseServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/tailwind-merge.php' => config_path('tailwind-merge.php'),
+                __DIR__.'/../config/tailwind-merge.php' => config_path('tailwind-merge.php'),
             ]);
         }
 
@@ -63,7 +63,7 @@ class TailwindMergeServiceProvider extends BaseServiceProvider
             /** @var TailwindMergeInterface $instance */
             $instance = resolve(TailwindMergeInterface::class);
 
-            $attribute = 'class' . ($for !== '' ? ':' . $for : '');
+            $attribute = 'class'.($for !== '' ? ':'.$for : '');
 
             /** @var string $classes */
             $classes = $this->get($attribute, '');

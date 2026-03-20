@@ -1,25 +1,22 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/gehrisandro/tailwind-merge-laravel/main/art/example.png" width="600" alt="TailwindMerge for Laravel">
+    <img src="https://raw.githubusercontent.com/marcorieser/tailwind-merge-laravel/main/art/example.png" width="600" alt="TailwindMerge for Laravel">
     <p align="center">
-        <a href="https://github.com/gehrisandro/tailwind-merge-laravel/actions"><img alt="GitHub Workflow Status (main)" src="https://img.shields.io/github/actions/workflow/status/gehrisandro/tailwind-merge-laravel/tests.yml?branch=main&label=tests&style=round-square"></a>
-        <a href="https://packagist.org/packages/gehrisandro/tailwind-merge-laravel"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/gehrisandro/tailwind-merge-laravel"></a>
-        <a href="https://packagist.org/packages/gehrisandro/tailwind-merge-laravel"><img alt="Latest Version" src="https://img.shields.io/packagist/v/gehrisandro/tailwind-merge-laravel"></a>
-        <a href="https://packagist.org/packages/gehrisandro/tailwind-merge-laravel"><img alt="License" src="https://img.shields.io/github/license/gehrisandro/tailwind-merge-laravel"></a>
+        <a href="https://github.com/marcorieser/tailwind-merge-laravel/actions"><img alt="GitHub Workflow Status (main)" src="https://img.shields.io/github/actions/workflow/status/marcorieser/tailwind-merge-laravel/tests.yml?branch=main&label=tests&style=round-square"></a>
+        <a href="https://packagist.org/packages/marcorieser/tailwind-merge-laravel"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/marcorieser/tailwind-merge-laravel"></a>
+        <a href="https://packagist.org/packages/marcorieser/tailwind-merge-laravel"><img alt="Latest Version" src="https://img.shields.io/packagist/v/marcorieser/tailwind-merge-laravel"></a>
+        <a href="https://packagist.org/packages/marcorieser/tailwind-merge-laravel"><img alt="License" src="https://img.shields.io/github/license/marcorieser/tailwind-merge-laravel"></a>
     </p>
 </p>
 
 ------
 
-**TailwindMerge for Laravel** allows you to merge multiple [Tailwind CSS](https://tailwindcss.com/) classes and automatically resolves conflicts between classes by removing classes conflicting with a class defined later. This is especially helpful when you want to override Tailwind CSS classes in your Blade components.
+**TailwindMerge for Laravel** allows you to merge multiple [Tailwind 4 CSS](https://tailwindcss.com/) classes and automatically resolves conflicts between classes by removing classes conflicting with a class defined later. This is especially helpful when you want to override Tailwind CSS classes in your Blade components.
 
-A Laravel / PHP port of [tailwind-merge](https://github.com/dcastil/tailwind-merge) by [dcastil](https://github.com/dcastil).
+A Laravel wrapper around the [TailwindMerge for PHP](https://github.com/tales-from-a-dev/tailwind-merge-php) package.
 
-Supports Tailwind v3.0 up to v3.3.
+Supports Tailwind **v4.0** up to **v4.2**.
 
-If you find this package helpful, please consider sponsoring the maintainer:
-- Sandro Gehri: **[github.com/sponsors/gehrisandro](https://github.com/sponsors/gehrisandro)**
-
-> If you are **NOT** using Laravel, you can use the [TailwindMerge for PHP](https://github.com/gehrisandro/tailwind-merge-php) directly.
+> If you are **NOT** using Laravel, you can use [TailwindMerge for PHP](https://github.com/tales-from-a-dev/tailwind-merge-php) directly.
 
 ## Table of Contents
 - [Get Started](#get-started)
@@ -29,28 +26,28 @@ If you find this package helpful, please consider sponsoring the maintainer:
   - [Everywhere else in Laravel](#everywhere-else-in-laravel)
 - [Configuration](#configuration)
   - [Custom Tailwind Config](#custom-tailwind-config)
-- [Contributing](#contributing)
+- [Credits](#credits)
 
 ## Get Started
-> **Requires [Laravel 10](https://github.com/laravel/laravel)**
+> **Requires [Laravel 11](https://github.com/laravel/laravel)**
 
 First, install `TailwindMerge for Laravel` via the [Composer](https://getcomposer.org/) package manager:
 
 ```bash
-composer require gehrisandro/tailwind-merge-laravel
+composer require marcorieser/tailwind-merge-laravel
 ```
 
 Optionally, publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="TailwindMerge\Laravel\TailwindMergeServiceProvider"
+php artisan vendor:publish --provider="MarcoRieser\TailwindMergeLaravel\TailwindMergeServiceProvider"
 ```
 
 This will create a `config/tailwind-merge.php` configuration file in your project, which you can modify to your needs
 using environment variables. For more information, see the [Configuration](#configuration) section:
 
 ```env
-TAILWIND_MERGE_PREFIX=tw-
+TAILWIND_MERGE_PREFIX=tw
 ```
 
 Finally, you may use `TailwindMerge` in various places like your Blade components:
@@ -69,7 +66,7 @@ Finally, you may use `TailwindMerge` in various places like your Blade component
 `TailwindMerge` is not only capable of resolving conflicts between basic Tailwind CSS classes, but also handles more complex scenarios:
 
 ```php
-use TailwindMerge\Laravel\Facades\TailwindMerge;
+use MarcoRieser\TailwindMergeLaravel\Facades\TailwindMerge;
 
 // conflicting classes
 TailwindMerge::merge('block inline'); // inline
@@ -88,7 +85,7 @@ TailwindMerge::merge('text-black dark:text-white dark:text-gray-700'); // text-b
 TailwindMerge::merge('hover:block hover:inline'); // hover:inline
 
 // with the important modifier
-TailwindMerge::merge('!font-medium !font-bold'); // !font-bold
+TailwindMerge::merge('font-medium! font-bold!'); // font-bold
 
 // arbitrary values
 TailwindMerge::merge('z-10 z-[999]'); // z-[999] 
@@ -111,7 +108,7 @@ TailwindMerge::merge(['h-10', 'h-20'], 'h-30', ['h-40']); // h-40
 
 ## Usage
 
-For in depth documentation and general PHP examples, take a look at the [gehrisandro/tailwind-merge-php](https://github.com/gehrisandro/tailwind-merge-php) repository.
+For in-depth documentation and general PHP examples, take a look at the [tales-from-a-dev/tailwind-merge-php](https://github.com/tales-from-a-dev/tailwind-merge-php) repository.
 
 ### Use in Laravel Blade Components
 
@@ -138,7 +135,7 @@ This will render the following HTML:
 > **Note:** Usage of `$attributes->merge(['class' => '...'])` is currently not supported due to limitations in Laravel.
 
 #### Merge classes on multiple elements
-By default Laravel allows you to only merge classes in one place. But with `TailwindMerge` you can merge classes on multiple elements by using `twMergeFor()`:
+By default, Laravel allows you to only merge classes in one place. But with `TailwindMerge` you can merge classes on multiple elements by using `twMergeFor()`:
 
 ```blade
 // button.blade.php
@@ -203,7 +200,7 @@ If you don't use Laravel Blade, you can still use `TailwindMerge` by using the F
 
 #### Facade
 ```php
-use TailwindMerge\Laravel\Facades\TailwindMerge;
+use MarcoRieser\TailwindMergeLaravel\Facades\TailwindMerge;
 
 TailwindMerge::merge('w-10 h-10 rounded-full bg-red-500 bg-blue-500'); // w-10 h-10 rounded-full bg-blue-500
 ```
@@ -214,7 +211,7 @@ twMerge('w-10 h-10 rounded-full bg-red-500 bg-blue-500'); // w-10 h-10 rounded-f
 ```
 
 ### More usage examples
-Take a look at the [TailwindMerge for PHP](https://github.com/gehrisandro/tailwind-merge-php) repository.
+Take a look at the [TailwindMerge for PHP](https://github.com/tales-from-a-dev/tailwind-merge-php) repository.
 
 ## Configuration
 
@@ -222,12 +219,12 @@ If you are using Tailwind CSS without any extra config, you can use TailwindMerg
 
 If you're using a custom Tailwind config, you may need to configure TailwindMerge as well to merge classes properly.
 
-By default TailwindMerge is configured in a way that you can still use it if all the following apply to your Tailwind config:
+By default, TailwindMerge is configured in a way that you can still use it if all the following apply to your Tailwind config:
 
 - Only using color names which don't clash with other Tailwind class names
 - Only deviating by number values from number-based Tailwind classes
 - Only using font-family classes which don't clash with default font-weight classes
-- Sticking to default Tailwind config for everything else
+- Sticking to the default Tailwind config for everything else
 
 If some of these points don't apply to you, you need to customize the configuration.
 
@@ -236,12 +233,12 @@ If some of these points don't apply to you, you need to customize the configurat
 You can configure the prefix directly in the `config/tailwind-merge.php` configuration file or by setting the environment variable:
 
 ```env
-TAILWIND_MERGE_PREFIX=tw-
+TAILWIND_MERGE_PREFIX=tw
 ```
 
-### Modify merge process
+### Modify the merge process
 
-If TailwindMerge is not able to merge your changes properly you can modify the merge process by modifying existing class groups or adding new class groups.
+If TailwindMerge is not able to merge your changes properly, you can modify the merge process by modifying existing class groups or adding new class groups.
 
 For example, if you want to add a custom font size of "very-large":
 
@@ -260,13 +257,9 @@ return [
 
 For a more detailed explanation of the configuration options, visit the [original package documentation](https://github.com/dcastil/tailwind-merge/blob/v1.14.0/docs/configuration.md).
 
-## Contributing
+## Credits
 
-Thank you for considering contributing to `TailwindMerge for Laravel`! The contribution guide can be found in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
-
-
+Thanks to [Sandro Gehri](https://github.com/gehrisandro) for creating the original [TailwindMerge for Laravel](https://github.com/gehrisandro/tailwind-merge-laravel) package.
 ---
 
-`TailwindMerge for PHP` is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
-
-
+`TailwindMerge for Laravel` is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
