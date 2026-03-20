@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace TailwindMerge\Laravel;
+namespace MarcoRieser\TailwindMergeLaravel;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\ComponentAttributeBag;
-use TailwindMerge\Contracts\TailwindMergeContract;
-use TailwindMerge\TailwindMerge;
+use TalesFromADev\TailwindMerge\TailwindMergeInterface;
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 class TailwindMergeServiceProvider extends BaseServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton(TailwindMergeContract::class, static fn (): TailwindMerge => TailwindMerge::factory()
-            ->withConfiguration(config('tailwind-merge', []))
-            ->withCache(app('cache')->store()) // @phpstan-ignore-line
-            ->make());
+        $this->app->singleton(TailwindMergeInterface::class, static fn (): TailwindMerge => new TailwindMerge(
+            additionalConfiguration: config('tailwind-merge', []),
+            cache: app('cache')->store(),
+        ));
 
-        $this->app->alias(TailwindMergeContract::class, 'tailwind-merge');
-        $this->app->alias(TailwindMergeContract::class, TailwindMerge::class);
+        $this->app->alias(TailwindMergeInterface::class, 'tailwind-merge');
+        $this->app->alias(TailwindMergeInterface::class, TailwindMerge::class);
     }
 
     public function boot(): void
@@ -52,7 +52,7 @@ class TailwindMergeServiceProvider extends BaseServiceProvider
     {
         ComponentAttributeBag::macro('twMerge', function (...$args): ComponentAttributeBag {
             /** @var ComponentAttributeBag $this */
-            $this->offsetSet('class', resolve(TailwindMergeContract::class)->merge($args, ($this->get('class', ''))));
+            $this->offsetSet('class', resolve(TailwindMergeInterface::class)->merge($args, ($this->get('class', ''))));
 
             return $this;
         });
@@ -60,8 +60,8 @@ class TailwindMergeServiceProvider extends BaseServiceProvider
         ComponentAttributeBag::macro('twMergeFor', function (string $for, ...$args): ComponentAttributeBag {
             /** @var ComponentAttributeBag $this */
 
-            /** @var TailwindMergeContract $instance */
-            $instance = resolve(TailwindMergeContract::class);
+            /** @var TailwindMergeInterface $instance */
+            $instance = resolve(TailwindMergeInterface::class);
 
             $attribute = 'class' . ($for !== '' ? ':' . $for : '');
 
@@ -80,13 +80,13 @@ class TailwindMergeServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * @return array<class-string<\TailwindMerge\Contracts\TailwindMergeContract>>|string[]
+     * @return array<class-string<TailwindMergeInterface>>|string[]
      */
     public function provides(): array
     {
         return [
             TailwindMerge::class,
-            TailwindMergeContract::class,
+            TailwindMergeInterface::class,
             'tailwind-merge',
         ];
     }

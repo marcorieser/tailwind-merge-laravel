@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Config\Repository;
-use TailwindMerge\Contracts\TailwindMergeContract;
-use TailwindMerge\Laravel\TailwindMergeServiceProvider;
-use TailwindMerge\TailwindMerge;
+use MarcoRieser\TailwindMergeLaravel\TailwindMergeServiceProvider;
+use TalesFromADev\TailwindMerge\TailwindMerge;
+use TalesFromADev\TailwindMerge\TailwindMergeInterface;
 
 it('binds the tailwind merge on the container', function () {
     $app = app();
@@ -40,7 +40,7 @@ it('uses the prefix from the configuration', function () {
 
     $app->bind('config', fn () => new Repository([
         'tailwind-merge' => [
-            'prefix' => 'tw-',
+            'prefix' => 'tw',
         ],
     ]));
 
@@ -48,7 +48,7 @@ it('uses the prefix from the configuration', function () {
 
     $twMerge = $app->get(TailwindMerge::class);
 
-    expect($twMerge->merge('tw-h-4 tw-h-6'))->toBe('tw-h-6');
+    expect($twMerge->merge('tw:h-4 tw:h-6'))->toBe('tw:h-6');
 });
 
 it('uses the class groups from the configuration', function () {
@@ -78,7 +78,7 @@ it('provides', function () {
 
     expect($provides)->toBe([
         TailwindMerge::class,
-        TailwindMergeContract::class,
+        TailwindMergeInterface::class,
         'tailwind-merge',
     ]);
 });
