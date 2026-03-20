@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Illuminate\Foundation\Testing\Concerns\InteractsWithViews;
-use TailwindMerge\Laravel\TailwindMergeServiceProvider;
+use MarcoRieser\TailwindMergeLaravel\TailwindMergeServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {

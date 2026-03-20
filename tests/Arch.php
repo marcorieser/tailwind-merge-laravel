@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 test('facades')
-    ->expect('TailwindMerge\Laravel\Facades\TailwindMerge')
+    ->expect('MarcoRieser\TailwindMergeLaravel\Facades\TailwindMerge')
     ->toOnlyUse([
         'Illuminate\Support\Facades\Facade',
     ]);
 
 test('service providers')
-    ->expect('TailwindMerge\Laravel\TailwindMergeServiceProvider')
+    ->expect('MarcoRieser\TailwindMergeLaravel\TailwindMergeServiceProvider')
     ->toOnlyUse([
         'Illuminate\Contracts\Support\DeferrableProvider',
         'Illuminate\Support\ServiceProvider',
