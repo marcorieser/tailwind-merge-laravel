@@ -260,6 +260,7 @@ For a more detailed explanation of the configuration options, visit the [origina
 ## Credits
 
 Thanks to [Sandro Gehri](https://github.com/gehrisandro) for creating the original [TailwindMerge for Laravel](https://github.com/gehrisandro/tailwind-merge-laravel) package.
+
 ---
 
 `TailwindMerge for Laravel` is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
