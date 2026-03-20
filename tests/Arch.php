@@ -15,6 +15,8 @@ test('service providers')
         'Illuminate\Support\ServiceProvider',
         'Illuminate\View\Compilers\BladeCompiler',
         'Illuminate\View\ComponentAttributeBag',
+        'TalesFromADev\TailwindMerge\TailwindMergeInterface',
+        'TalesFromADev\TailwindMerge\TailwindMerge',
         'TailwindMerge',
 
         // helpers...
